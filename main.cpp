@@ -71,43 +71,53 @@ public:
         temp->next = newNode;
     }
 
+    // goes through the list and deletes the first node that has the given value
     void delete_val(int value) {
+        // if the list is empty, nothing to delete
         if (!head) return;
 
-        Node* temp = head;
+        Node* temp = head;  // start from the beginning of the list
         
+        // move through the list until we find the node with the value we want
         while (temp && temp->data != value)
             temp = temp->next;
 
+        // if we reached the end and didn’t find it, just stop here
         if (!temp) return; 
 
+        // if there's a node before this one, link it to the node after
         if (temp->prev)
             temp->prev->next = temp->next;
         else
-            head = temp->next; 
+            head = temp->next;  // if deleting the first node, move head up
 
+        // if there's a node after this one, link it back to the node before
         if (temp->next)
             temp->next->prev = temp->prev;
         else
-            tail = temp->prev; 
+            tail = temp->prev;  // if deleting the last node, move tail back
 
-        delete temp;
+        delete temp;  // finally delete the node from memory
     }
 
+    // deletes a node from a specific position in the list
     void delete_pos(int pos) {
+        // if the list is empty, we can't delete anything
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
     
+        // if they want to delete the first node, just use pop_front
         if (pos == 1) {
             pop_front();
             return;
         }
     
-        Node* temp = head;
+        Node* temp = head;  // start at the first node
     
-        for (int i = 1; i < pos; i++){
+        // move forward through the list until we reach the given position
+        for (int i = 1; i < pos; i++) {
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
                 return;
@@ -115,20 +125,25 @@ public:
             else
                 temp = temp->next;
         }
+
+        // if we went too far and didn’t find the position
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
         }
     
+        // if it's the last node in the list, just use pop_back
         if (!temp->next) {
             pop_back();
             return;
         }
     
+        // connect the nodes before and after this one to skip it
         Node* tempPrev = temp->prev;
         tempPrev->next = temp->next;
         temp->next->prev = tempPrev;
-        delete temp;
+
+        delete temp;  // remove that node from memory
     }
 
     void push_back(int v) {
