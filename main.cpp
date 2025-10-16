@@ -58,7 +58,7 @@ public:
         }
 
         // link the new node after the found node
-        newNode->next = temp->next; // nw node points to node after temp
+        newNode->next = temp->next; // new node points to node after temp
         newNode->prev = temp;       // new node points back to temp
 
         // if temp was not the last node, connect next node's prev pointer
@@ -145,6 +145,7 @@ public:
 
         delete temp;  // remove that node from memory
     }
+
     // push_back() - adds a new node at the END of the list
     void push_back(int v) {
         Node* newNode = new Node(v); // make a new node with given value
@@ -235,7 +236,7 @@ public:
     void print() {
         Node* current = head;
 
-        // if list is empty
+        // if list is empty, say so
         if (!current) {
             cout << "List is empty." << endl;
             return;
@@ -249,6 +250,7 @@ public:
 
         cout << endl; // new line after printing everything
     }
+
     void print_reverse() {
         Node* current = tail;
         if (!current) { 
@@ -261,11 +263,41 @@ public:
         }
         cout << endl;
     }
+
+    // every_other_element() - prints every other element (skips one each time)
+    void every_other_element() {
+        Node* current = head;
+        bool skip = false; // alternates between printing and skipping
+        cout << "Every other element: ";
+        while (current) {
+            if (!skip)
+                cout << current->data << " ";
+            skip = !skip; // flips between true/false each loop
+            current = current->next;
+        }
+        cout << endl;
+    }
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    // create a list and add sample data
+    DoublyLinkedList list;
+    list.push_back(10);
+    list.push_back(20);
+    list.push_back(30);
+    list.push_back(40);
+    list.push_back(50);
 
-    
+    cout << "Full list: ";
+    list.print();
+
+    cout << "Reverse list: ";
+    list.print_reverse();
+
+    cout << endl << "Testing every_other_element():" << endl;
+    list.every_other_element();
+
+    cout << endl << "Midterm finished successfully." << endl;
+
     return 0;
 }
