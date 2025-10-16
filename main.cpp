@@ -58,7 +58,7 @@ public:
         }
 
         // link the new node after the found node
-        newNode->next = temp->next; // new node points to node after temp
+        newNode->next = temp->next; // nw node points to node after temp
         newNode->prev = temp;       // new node points back to temp
 
         // if temp was not the last node, connect next node's prev pointer
@@ -71,12 +71,12 @@ public:
         temp->next = newNode;
     }
 
-    // goes through the list and deletes the first node that has the given value
+    // gos through the list and deletes the first node that has the given value
     void delete_val(int value) {
         // if the list is empty, nothing to delete
         if (!head) return;
 
-        Node* temp = head;  // start from the beginning of the list
+        Node* temp = head;  // tart from the beginning of the list
         
         // move through the list until we find the node with the value we want
         while (temp && temp->data != value)
@@ -97,7 +97,7 @@ public:
         else
             tail = temp->prev;  // if deleting the last node, move tail back
 
-        delete temp;  // finally delete the node from memory
+        delete temp;  // elete the node from memory
     }
 
     // deletes a node from a specific position in the list
@@ -145,83 +145,110 @@ public:
 
         delete temp;  // remove that node from memory
     }
-
+    // push_back() - adds a new node at the END of the list
     void push_back(int v) {
-        Node* newNode = new Node(v);
+        Node* newNode = new Node(v); // make a new node with given value
+
+        // if list is empty, this is the first node
         if (!tail)
             head = tail = newNode;
         else {
+            // connect new node after the current tail
             tail->next = newNode;
             newNode->prev = tail;
+
+            // move tail pointer to the new node
             tail = newNode;
         }
     }
     
+    // push_front() - adds a new node at the FRONT of the list
     void push_front(int v) {
-        Node* newNode = new Node(v);
+        Node* newNode = new Node(v); // make a new node with given value
+
+        // if list is empty, it becomes both head and tail
         if (!head)
             head = tail = newNode;
         else {
+            // connect new node before the current head
             newNode->next = head;
             head->prev = newNode;
+
+            // move head pointer to the new node
             head = newNode;
         }
     }
     
+    // pop_front() - removes the first node in the list
     void pop_front() {
-
+        // if list is empty, nothing to remove
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
 
-        Node * temp = head;
+        Node* temp = head; // keep track of the node being deleted
 
+        // if there’s more than one node
         if (head->next) {
-            head = head->next;
-            head->prev = nullptr;
+            head = head->next;   // move head pointer to the next node
+            head->prev = nullptr; // new head has no previous node
         }
         else
-            head = tail = nullptr;
-        delete temp;
+            head = tail = nullptr; // if only one node, list becomes empty
+
+        delete temp; // free memory of the old head node
     }
 
+    // pop_back() - removes the last node in the list
     void pop_back() {
+        // if list is empty, nothing to remove
         if (!tail) {
             cout << "List is empty." << endl;
             return;
         }
-        Node * temp = tail;
 
+        Node* temp = tail; // keep track of the node being deleted
+
+        // if there’s more than one node
         if (tail->prev) {
-            tail = tail->prev;
-            tail->next = nullptr;
+            tail = tail->prev;   // move tail pointer one node back
+            tail->next = nullptr; // new tail has no next node
         }
         else
-            head = tail = nullptr;
-        delete temp;
+            head = tail = nullptr; // if only one node, list becomes empty
+
+        delete temp; // free memory of the old tail node
     }
 
+    // destructor - called automatically when the list is destroyed
+    // goes through and deletes all remaining nodes to free memory
     ~DoublyLinkedList() {
         while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+            Node* temp = head;    // start at the first node
+            head = head->next;    // move to the next node
+            delete temp;          // delete the old one
         }
     }
+
+    // print() - goes through the list and prints all node values
     void print() {
         Node* current = head;
+
+        // if list is empty
         if (!current) {
             cout << "List is empty." << endl;
             return;
         }
+
+        // loop through the list and print each value
         while (current) {
             cout << current->data << " ";
-            current = current->next;
+            current = current->next; // move to the next node
         }
-        cout << endl;
-    }
 
+        cout << endl; // new line after printing everything
+    }
     void print_reverse() {
         Node* current = tail;
         if (!current) { 
