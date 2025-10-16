@@ -13,9 +13,9 @@ private:
         Node* prev; // pointer to prev node
         Node* next; // pointer to next node
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val; 
-            prev = p;
-            next = n;
+            data = val; // stores the passed integr 
+            prev = p; // assigns pointer to prev node 
+            next = n; // assigns pointer to next node
         }
     };
 
@@ -23,36 +23,51 @@ private:
     Node* tail; // points to the last node in the list
 
 public:
-    DoublyLinkedList() { head = nullptr; tail = nullptr; }
+    // constructor - starts with an empty list
+    DoublyLinkedList() { 
+        head = nullptr;   // no first node yet
+        tail = nullptr;   // no last node yet
+    }
 
+    // insert_after() - inserts a new node after a given position
     void insert_after(int value, int position) {
+        // check for invalid position
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
         }
 
-        Node* newNode = new Node(value);
+        Node* newNode = new Node(value); // make a new node with given value
+
+        // if list is empty, new node becomes both head and tail
         if (!head) {
             head = tail = newNode;
             return;
         }
 
+        // start from head and move to the given position
         Node* temp = head;
         for (int i = 0; i < position && temp; ++i)
             temp = temp->next;
 
+        // if position is past the end of the list
         if (!temp) {
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
+            delete newNode; // clean up unused node
             return;
         }
 
-        newNode->next = temp->next;
-        newNode->prev = temp;
+        // link the new node after the found node
+        newNode->next = temp->next; // new node points to node after temp
+        newNode->prev = temp;       // new node points back to temp
+
+        // if temp was not the last node, connect next node's prev pointer
         if (temp->next)
             temp->next->prev = newNode;
         else
-            tail = newNode;
+            tail = newNode; // if temp was last, update tail
+
+        // connect temp's next pointer to new node
         temp->next = newNode;
     }
 
