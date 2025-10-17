@@ -278,9 +278,9 @@ public:
         cout << endl;
     }
 };
-
-int main() {
-    // create a list and add sample data
+ 
+    int main() {
+    // create a list and add sample data using 5 values to the list using "pushback"
     DoublyLinkedList list;
     list.push_back(10);
     list.push_back(20);
@@ -288,16 +288,16 @@ int main() {
     list.push_back(40);
     list.push_back(50);
 
-    cout << "Full list: ";
+    cout << "Full list: "; // prints the entire list from front to back 
     list.print();
 
-    cout << "Reverse list: ";
+    cout << "Reverse list: "; // prints the entire list from back to front 
     list.print_reverse();
 
-    cout << endl << "Testing every_other_element():" << endl;
+    cout << endl << "Testing every_other_element():" << endl; // shows "every_other_element()" outputs
     list.every_other_element();
 
-    cout << endl << "Midterm finished successfully." << endl;
+    cout << endl << "Midterm finished successfully." << endl; // message for my own personal confirmation purposes 
 
     return 0;
 }
